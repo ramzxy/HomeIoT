@@ -1,7 +1,7 @@
 import React from 'react';
 import { Thermometer, Droplets } from 'lucide-react';
 
-const Dashboard = ({ current }) => {
+const Dashboard = ({ current, statsTemp, statsHum }) => {
   if (!current) return <div className="loading">Loading...</div>;
 
   // Find latest temp and hum from the list or object
@@ -24,6 +24,22 @@ const Dashboard = ({ current }) => {
         <div className="value">
           {temp}<span className="unit">°C</span>
         </div>
+        {statsTemp && (
+          <div className="stats-row">
+            <div className="stat">
+              <span className="label">Avg</span>
+              <span className="val">{statsTemp.avg?.toFixed(1)}</span>
+            </div>
+            <div className="stat">
+              <span className="label">Min</span>
+              <span className="val">{statsTemp.min?.toFixed(1)}</span>
+            </div>
+            <div className="stat">
+              <span className="label">Max</span>
+              <span className="val">{statsTemp.max?.toFixed(1)}</span>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="card hum-card">
@@ -34,6 +50,22 @@ const Dashboard = ({ current }) => {
         <div className="value">
           {hum}<span className="unit">%</span>
         </div>
+        {statsHum && (
+          <div className="stats-row">
+            <div className="stat">
+              <span className="label">Avg</span>
+              <span className="val">{statsHum.avg?.toFixed(1)}</span>
+            </div>
+            <div className="stat">
+              <span className="label">Min</span>
+              <span className="val">{statsHum.min?.toFixed(1)}</span>
+            </div>
+            <div className="stat">
+              <span className="label">Max</span>
+              <span className="val">{statsHum.max?.toFixed(1)}</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -6,7 +6,8 @@ from database import init_db, get_db, Reading
 from mqtt_service import start_mqtt
 from typing import List
 from pydantic import BaseModel
-from datetime import datetime
+from sqlalchemy import func
+from datetime import datetime, timedelta
 import os
 
 app = FastAPI()
@@ -52,7 +53,30 @@ def get_history(sensor_type: str, db: Session = Depends(get_db)):
     # Assuming topic format "home/sensor/temperature"
     topic = f"home/sensor/{sensor_type}"
     readings = db.query(Reading).filter(Reading.topic == topic).order_by(Reading.timestamp.desc()).limit(100).all()
+    readings = db.query(Reading).filter(Reading.topic == topic).order_by(Reading.timestamp.desc()).limit(100).all()
     return readings
+
+class StatsSchema(BaseModel):
+    avg: float | None
+    min: float | None
+    max: float | None
+
+@app.get("/api/stats/{sensor_type}", response_model=StatsSchema)
+def get_stats(sensor_type: str, db: Session = Depends(get_db)):
+    topic = f"home/sensor/{sensor_type}"
+    since = datetime.now() - timedelta(hours=24)
+    
+    result = db.query(
+        func.avg(Reading.value).label("avg"),
+        func.min(Reading.value).label("min"),
+        func.max(Reading.value).label("max")
+    ).filter(Reading.topic == topic, Reading.timestamp >= since).first()
+    
+    return {
+        "avg": result.avg,
+        "min": result.min,
+        "max": result.max
+    }
 
 # Serve Frontend (We will build this later, but setting up the mount)
 # We need to check if the directory exists to avoid errors during dev

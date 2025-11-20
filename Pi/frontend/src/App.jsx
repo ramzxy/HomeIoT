@@ -13,6 +13,8 @@ function App() {
   const [current, setCurrent] = useState([]);
   const [historyTemp, setHistoryTemp] = useState([]);
   const [historyHum, setHistoryHum] = useState([]);
+  const [statsTemp, setStatsTemp] = useState(null);
+  const [statsHum, setStatsHum] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -24,6 +26,12 @@ function App() {
 
       const humRes = await axios.get(`${API_BASE}/api/history/humidity`);
       setHistoryHum(humRes.data);
+
+      const tempStatsRes = await axios.get(`${API_BASE}/api/stats/temperature`);
+      setStatsTemp(tempStatsRes.data);
+
+      const humStatsRes = await axios.get(`${API_BASE}/api/stats/humidity`);
+      setStatsHum(humStatsRes.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -43,7 +51,7 @@ function App() {
       </header>
       
       <main>
-        <Dashboard current={current} />
+        <Dashboard current={current} statsTemp={statsTemp} statsHum={statsHum} />
         <Charts historyTemp={historyTemp} historyHum={historyHum} />
       </main>
     </div>
