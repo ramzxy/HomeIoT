@@ -35,6 +35,7 @@ h1 {
   margin: 0;
   background: linear-gradient(to right, #fff, #888);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -133,4 +134,33 @@ h1 {
   .charts-container {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+/* Statistics Styles */
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat .label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.stat .val {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
