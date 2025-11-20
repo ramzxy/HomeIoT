@@ -25,7 +25,7 @@ const Charts = ({ historyTemp, historyHum }) => {
             <LineChart data={tempData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#ffffff20" />
               <XAxis dataKey="time" stroke="#888" tick={{fill: '#888'}} />
-              <YAxis stroke="#888" tick={{fill: '#888'}} domain={['dataMin - 1', 'dataMax + 1']} />
+              <YAxis stroke="#888" tick={{fill: '#888'}} domain={['dataMin - 5', 'dataMax + 5']} />
               <Tooltip 
                 contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', borderRadius: '8px' }}
                 itemStyle={{ color: '#fff' }}
