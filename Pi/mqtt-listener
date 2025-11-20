@@ -1,0 +1,32 @@
+import csv
+import os
+import time
+import paho.mqtt.client as mqtt
+
+CSV_FILE = "sensor_data.csv"
+MQTT_BROKER = "localhost"
+MQTT_PORT = 1883
+MQTT_TOPIC = "home/sensor/#"
+
+# Ensure CSV has header
+if not os.path.exists(CSV_FILE):
+    with open(CSV_FILE, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["timestamp", "topic", "value"])
+
+def on_message(client, userdata, msg):
+    payload = msg.payload.decode()
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} | {msg.topic} -> {payload}")
+
+    with open(CSV_FILE, "a", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow([timestamp, msg.topic, payload])
+
+client = mqtt.Client()
+client.on_message = on_message
+client.connect(MQTT_BROKER, MQTT_PORT, 60)
+client.subscribe(MQTT_TOPIC)
+
+print("MQTT CSV Logger Running...")
+client.loop_forever()
