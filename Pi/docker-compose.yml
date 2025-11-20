@@ -21,3 +21,9 @@ services:
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
     restart: unless-stopped
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiMWUxMDU0YzdhOWJkYWJlYjVkY2ZhYTc4Y2M0YzgxZTgiLCJ0IjoiYmY5YmE0NDgtYmQyMi00ZDg1LWE4ZDAtZTc2MjhjMTIzNTA4IiwicyI6Ik9ERmlOamt6TVRJdE9ESTROeTAwWldRd0xXRXpPRE10TWpObU1EVXhaVGd4WWpkayJ9
