@@ -8,18 +8,26 @@ const Charts = React.memo(({ historyTemp, historyHum }) => {
   // We might want to reverse them if they come in desc order
   // Memoize data transformation to avoid recalculation on every render
   const tempData = useMemo(() => {
-    return [...historyTemp].reverse().map(r => ({
-      time: new Date(r.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    return [...historyTemp].map(r => ({
+      timestamp: new Date(r.timestamp).getTime(),
       value: r.value
     }));
   }, [historyTemp]);
 
   const humData = useMemo(() => {
-    return [...historyHum].reverse().map(r => ({
-      time: new Date(r.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    return [...historyHum].map(r => ({
+      timestamp: new Date(r.timestamp).getTime(),
       value: r.value
     }));
   }, [historyHum]);
+
+  const formatXAxis = (tickItem) => {
+    return new Date(tickItem).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const formatTooltipLabel = (label) => {
+    return new Date(label).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
 
   return (
     <div className="charts-container">
@@ -36,7 +44,10 @@ const Charts = React.memo(({ historyTemp, historyHum }) => {
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
               <XAxis 
-                dataKey="time" 
+                dataKey="timestamp" 
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                tickFormatter={formatXAxis}
                 stroke="#666" 
                 tick={{fill: '#666', fontSize: 12}} 
                 tickLine={false}
@@ -51,6 +62,7 @@ const Charts = React.memo(({ historyTemp, historyHum }) => {
                 domain={['dataMin - 2', 'dataMax + 2']} 
               />
               <Tooltip 
+                labelFormatter={formatTooltipLabel}
                 contentStyle={{ backgroundColor: '#1e1e1e', border: '1px solid #333', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
                 itemStyle={{ color: '#fff' }}
                 labelStyle={{ color: '#888', marginBottom: '0.5rem' }}
@@ -82,7 +94,10 @@ const Charts = React.memo(({ historyTemp, historyHum }) => {
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
               <XAxis 
-                dataKey="time" 
+                dataKey="timestamp" 
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                tickFormatter={formatXAxis}
                 stroke="#666" 
                 tick={{fill: '#666', fontSize: 12}} 
                 tickLine={false}
@@ -97,6 +112,7 @@ const Charts = React.memo(({ historyTemp, historyHum }) => {
                 domain={['dataMin - 5', 'dataMax + 5']} 
               />
               <Tooltip 
+                labelFormatter={formatTooltipLabel}
                 contentStyle={{ backgroundColor: '#1e1e1e', border: '1px solid #333', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}
                 itemStyle={{ color: '#fff' }}
                 labelStyle={{ color: '#888', marginBottom: '0.5rem' }}
