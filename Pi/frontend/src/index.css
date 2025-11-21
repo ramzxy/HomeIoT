@@ -164,3 +164,97 @@ h1 {
   font-weight: 600;
   color: var(--text-primary);
 }
+
+/* Weather Widget Styles */
+.weather-card {
+  background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+  border: none;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.weather-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.weather-time {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.weather-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-main-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.weather-icon {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.weather-icon.sun { color: #f1c40f; }
+.weather-icon.cloud { color: #ecf0f1; }
+.weather-icon.rain { color: #3498db; }
+.weather-icon.thunder { color: #f1c40f; }
+
+.temp-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-temp {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.weather-desc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+.weather-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.75rem;
+  border-radius: 12px;
+}
+
+.weather-details-grid .detail-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.weather-details-grid .label {
+  opacity: 0.7;
+}
+
+.weather-details-grid .value {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
