@@ -46,7 +46,7 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1>IoT Dashboard</h1>
+        <h1>Home Dashboard</h1>
         <div className="status-dot"></div>
       </header>
       

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Thermometer, Droplets } from 'lucide-react';
+import WeatherWidget from './WeatherWidget';
 
 const Dashboard = ({ current, statsTemp, statsHum }) => {
   if (!current) return <div className="loading">Loading...</div>;
@@ -67,6 +68,8 @@ const Dashboard = ({ current, statsTemp, statsHum }) => {
           </div>
         )}
       </div>
+
+      <WeatherWidget />
     </div>
   );
 };

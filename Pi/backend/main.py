@@ -52,8 +52,8 @@ def get_history(sensor_type: str, db: Session = Depends(get_db)):
     # sensor_type e.g. "temperature" or "humidity"
     # Assuming topic format "home/sensor/temperature"
     topic = f"home/sensor/{sensor_type}"
-    readings = db.query(Reading).filter(Reading.topic == topic).order_by(Reading.timestamp.desc()).limit(100).all()
-    readings = db.query(Reading).filter(Reading.topic == topic).order_by(Reading.timestamp.desc()).limit(100).all()
+    since = datetime.now() - timedelta(hours=8)
+    readings = db.query(Reading).filter(Reading.topic == topic, Reading.timestamp >= since).order_by(Reading.timestamp.asc()).all()
     return readings
 
 class StatsSchema(BaseModel):
